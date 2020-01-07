@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Why use One-Time Migration Scripts | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=464534963" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=804859232" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=948649145" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=85057789" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 218 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>Why use One-Time Migration Scripts</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>3 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2019-07-Mon">
+            
+                            Mon, Jul 15, 2019
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2019/07/15/why-use-one-time-migration-scripts/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        School system taught me to despise old books and consider them outdated, rather about stories than knowledge. I wanted to prove I'm right, so I've read <a href="https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X">Pragmatic Programmer</a> from 1999 and <em>you won't believe what happened</em>...
+                    </div>
+                </div>
+
+                
+                <p>You already probably know about instant refactoring and <a href="/blog/2019/04/15/pattern-refactoring/">pattern refactoring</a> (I'm deprecating refactoring as you know it) that's possible thanks to <a href="https://github.com/rectorphp/rector">Rector</a>. But they require a certain knowledge of code and it's patterns.</p>
+<h2 id="instant-refactoring-today"><a href="#instant-refactoring-today" class="heading-anchor">Instant Refactoring Today?</a></h2>
+<p>I was wondering, <strong>how can you use instant refactoring at your work today with what you already know?</strong> So did <em>Andrew Hunt</em> and <em>David Thomas</em>, authors of <a href="https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X">Pragmatic Programmer</a>.</p>
+<p>They write about a migration script, that you <strong>write, use once and then delete it</strong>. Like a mandala-script :).
+In the end, you only commit changed files, but no the script you've made for it.</p>
+<h2 id="where-to-use-mandala-script"><a href="#where-to-use-mandala-script" class="heading-anchor">Where to use <em>Mandala-Script</em>?</a></h2>
+<ul>
+<li>move files from one directory to another</li>
+<li>rename files from <code>*.yml</code> to <code>*.yaml</code></li>
+<li>remove all trailing whitespaces</li>
+<li>remove <code>@throw</code> annotations from the docblocks</li>
+<li>update version of all <code>&lt;your-framework&gt;/*</code> in all <code>composer.json</code> from 3 to 4</li>
+<li>generate <code>.env</code>, <code>docker-composer.yml</code> and <code>.gitlab-ci.yml</code> from a set of env variables</li>
+<li>etc.</li>
+</ul>
+<p>Any script that:</p>
+<ul>
+<li>is related to <strong>many files</strong></li>
+<li>or is done <strong>over and over again</strong></li>
+<li>is <strong>more fun (effective)</strong> to write than to do manually</li>
+<li>has the potential to be reused or extended in the future</li>
+</ul>
+<h3 id="it-s-good-for-business"><a href="#it-s-good-for-business" class="heading-anchor">It's Good for Business</a></h3>
+<p>From a business point of view, it's very useful in cases, <strong>where it can be done wrong</strong>. We talk about configuration files like ENV and YAML. Usually, they have poor (= no) validation, so finding a bug is like reading a manual written all over the walls of your house about how to open door.</p>
+<p>Just last month the <code>KEY=value</code> vs <code>KEY: value</code> lead to 4-5 hours wasted in my current work.</p>
+<p><br></p>
+<p>As you can see, the idea is very simple, so let's use it in a simple case.
+I have prepared 2 related examples for you:</p>
+<h2 id="1-migrate-app-config-to-config"><a href="#1-migrate-app-config-to-config" class="heading-anchor">1. Migrate <code>app/config</code> to <code>config</code></a></h2>
+<p>In Symfony 4 the <a href="http://fabien.potencier.org/symfony4-directory-structure.html">base directory was changed</a>. We need to use new locations. In one project it's simple and better done manually. But we use monorepo and have  20+ <code>/packages/X/config</code> directories.</p>
+<p>Let's code:</p>
+<pre><code class="language-bash">composer require symfony/filesystem --dev
+composer require symfony/finder --dev</code></pre>
+<p><strong>Create <code>move_config_to_root.php</code> file</strong></p>
+<pre><code class="language-php">&lt;?php
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$filesystem = new Filesystem();
+
+$finder = (new Finder())-&gt;directories()
+    -&gt;in(__DIR__ . '/packages')
+    -&gt;name('config')
+    -&gt;notPath('App/config')
+    -&gt;getIterator();
+
+$configDirectories = iterator_to_array($finder);
+
+foreach ($configDirectories as $configDirectory) {
+    $oldPath = $configDirectory-&gt;getRealPath();
+    $newPath = dirname($configDirectory-&gt;getRealPath(), 2) . DIRECTORY_SEPARATOR . 'config';
+
+    if (!file_exists($oldPath)) {
+        continue;
+    }
+
+    $filesystem-&gt;rename($oldPath, $newPath);
+}</code></pre>
+<p><strong>Run <code>move_config_to_root.php</code> file</strong></p>
+<pre><code class="language-bash">php move_config_to_root.php</code></pre>
+<p><strong>See result</strong></p>
+<pre><code class="language-bash">git diff</code></pre>
+<p>Have you missed a spot? Just reset with:</p>
+<pre><code class="language-bash">git checkout .</code></pre>
+<p>Improve <code>move_config_to_root.php</code> and re-run again:</p>
+<pre><code class="language-bash">php move_config_to_root.php</code></pre>
+<p>It took me around 5 iterations to make it right, but the script was ready in 10 minutes. As a bonus, we could re-use it to move <code>/templates</code>, <code>/translations</code> etc. as well <strong>for just 1 minute of extra work</strong>.</p>
+<h2 id="2-update-resource-paths-in-services-yaml"><a href="#2-update-resource-paths-in-services-yaml" class="heading-anchor">2. Update <code>resource:</code> Paths in <code>services.yaml</code></a></h2>
+<p>But since we moved config files one level up, we also need to <strong>update paths inside the files</strong>. How?
+You can use <code>str_replace</code> or (like me) regular expressions.</p>
+<pre><code class="language-bash">composer require nette/utils --dev</code></pre>
+<p><strong>Create <code>update_resource_in_configs.php</code></strong></p>
+<pre><code class="language-php">&lt;?php
+
+use Nette\Utils\FileSystem;
+use Nette\Utils\Strings;
+use Symfony\Component\Finder\Finder;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$finder = (new Finder())-&gt;files()
+    -&gt;in(__DIR__ . '/packages')
+    -&gt;name('services.yaml')
+    -&gt;getIterator();
+
+$configFiles = iterator_to_array($finder);
+
+foreach ($configFiles as $configFile) {
+    $fileContent = FileSystem::read($configFile-&gt;getRealPath());
+
+    $movedResource = Strings::replace($fileContent, '#(resource:\s(\')?)\.\.#', '$1../src');
+
+    FileSystem::write($configFile-&gt;getRealPath(), $movedResource);
+}</code></pre>
+<pre><code class="language-diff"> services:
+     App\:
+-        resource: ..
++        resource: ../src</code></pre>
+<p>Again, it took us 3-4 iterations to cover all edge cases, but then it was ready and bullet-proof.</p>
+<h2 id="start-small-then-take-it-to-the-next-level"><a href="#start-small-then-take-it-to-the-next-level" class="heading-anchor">Start Small, then Take it to the Next Level</a></h2>
+<p><strong>If you want to get deeper into this thinking and find more inspiration, read the <em>Pragmatic Programmer</em> book</strong>. I personally found useful about 60 % of the content (compared to usual ~30 % in technical books), so <em class="fas fa-2x fa-thumbs-up text-success"></em>.</p>
+<img src="/assets/images/posts/2019/one-time/pragmatic_programmer.jpg" class="img-thumbnail">
+<p>I use this approach in Rector to create new rule + test in 1 file:</p>
+<p>Just edit <code>create-rector.yaml</code> (see in <a href="https://github.com/rectorphp/rector/blob/master/create-rector.yaml.dist">Github repo</a>) and then run:</p>
+<pre><code class="language-bash">bin/rector create</code></pre>
+<p>It:</p>
+<ul>
+<li>creates a rule with a basic description</li>
+<li>creates a test case</li>
+<li>creates a test fixture</li>
+<li>adds a rule to a set</li>
+<li>adds a new namespace to <code>composer.json</code> PSR-4 if needed</li>
+<li>dumps composer autoload if needed</li>
+</ul>
+<p>The sky is the limit, so fly high :)</p>
+<p><br></p>
+<p>Happy coding!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2019/2019-07-15-why-use-one-time-migration-scripts.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2019/07/08/7-tips-to-write-flawless-issue-report-on-github/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        7 Tips to Write Flawless Issue Reports on Github
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=1769596969"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=1220649749"></script>
+<script src="/assets/js/cluster-checklist.js?=201052631"></script>
+<script src="/assets/js/cluster-expanable.js?=1599665374"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="Why use One-Time Migration Scripts" />
+    <meta property="og:description" content="School system taught me to despise old books and consider them outdated, rather about stories than knowledge. I wanted to prove I&#039;m right, so I&#039;ve read Pragmatic Programmer from 1999 and you won&#039;t believe what happened..." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2019/07/15/why-use-one-time-migration-scripts" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="Why use One-Time Migration Scripts" />
+    <meta name="twitter:description" content="School system taught me to despise old books and consider them outdated, rather about stories than knowledge. I wanted to prove I&#039;m right, so I&#039;ve read Pragmatic Programmer from 1999 and you won&#039;t believe what happened..." />

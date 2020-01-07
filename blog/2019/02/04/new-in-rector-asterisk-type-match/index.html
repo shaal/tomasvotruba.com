@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>New in Rector: Asterisk Type Match | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=960104658" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=39201256" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=125082575" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=1240472445" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 183 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>New in Rector: Asterisk Type Match</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>3 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2019-02-Mon">
+            
+                            Mon, Feb 4, 2019
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2019/02/04/new-in-rector-asterisk-type-match/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        Rector had started just recently helping <strong>instantly refactor private commercial projects</strong>. Not just from legacy to modern PHP, but also <strong>from one PHP framework to another</strong>. I won't tell you which ones as the work is in progress, but when it's finished, you'll be the first to hear.
+<br>
+<br>
+The positive side effect of Rector helping to migrate real commercial project <strong>are new features in its core</strong> that is free and open-source Today with little, yet powerful <em>asterisk type match</em>.
+                    </div>
+                </div>
+
+                
+                <p>MVC (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">model-view-controller</a>) is wide-spread pattern across all PHP frameworks.
+That allows migration between them pretty smooth process. What do have <em>presenter</em>, <em>action</em>, <em>route-target</em> or <em>controller</em> in common? All are various names for the same entry point to the application.</p>
+<p>Each PHP frameworks has its conventions and conventions are the main topics during migration.</p>
+<p>E.g. one framework has default method of controller named <code>run</code>, the other <code>__invoke</code>. How can Rector help us?</p>
+<pre><code class="language-yaml"># rector.yaml
+services:
+    Rector\Rector\MethodCall\MethodNameReplacerRector:
+        SomeFramework\AbstractPresenter: # ← match type
+            run: '__invoke' # ← old method: new method</code></pre>
+<p>Then Rector will change the code for you:</p>
+<pre><code class="language-bash">vendor/bin/rector process src</code></pre>
+<p>↓</p>
+<pre><code class="language-diff"> &lt;?php
+
+ namespace App\SomeModule\Presenter;
+
+ use SomeFramework\AbstractPresenter;
+
+ final class SomeController extends AbstractPresenter
+ {
+-    public function run()
++    public function __invoke()
+     {
+
+     }
+ }</code></pre>
+<p>Easy! But what if you write <a href="https://matthiasnoback.nl/2014/06/how-to-create-framework-independent-controllers/">framework-independent controllers</a>? (I'm not a big fan of dogmas, but always do that).</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\SomeModule\Presenter;
+
+final class SomeController
+{
+    public function run()
+    {
+
+    }
+}</code></pre>
+<p>What now? Now you'll be punished for writing too clean code. This code is very poorly refactorable.</p>
+<p>In that case, you'll have to do it manually or with a regular expression:</p>
+<pre><code class="language-php">&lt;?php
+
+$controllerFileContent = preg_replace(
+    '#(^class .*Controller.*?^\s+public function )run(\()#ms',
+    '$1__invoke$2',
+    $controllerFileContent
+);</code></pre>
+<p>The <code>'$1__invoke$2'</code> trick keeps all matched content (the one inside <code>()</code>) and replaces middle &quot;run&quot; for &quot;__invoke&quot;. See pattern on <a href="https://regex101.com/r/u5LtXX/1/">regex101.com</a> if you don't believe me.</p>
+<p><br></p>
+<p>Regulars are fine for e.g. <a href="/blog/2018/07/05/how-to-convert-latte-templates-to-twig-in-27-regular-expressions/">templating migrations</a> where are no better tools to parse code, <strong>but in PHP refactoring regulars migration are very bad and fragile joke</strong>.</p>
+<p><br></p>
+<p>Use Rector for that instead:</p>
+<pre><code class="language-yaml"># rector.yaml
+services:
+    Rector\Rector\MethodCall\MethodNameReplacerRector:
+        App\SomeModule\Presenter\SomeController:
+            run: '__invoke'</code></pre>
+<p>Do you have more classes? No troubles! Just put each class one by one carefully to the config...</p>
+<pre><code class="language-yaml"># rector.yaml
+services:
+    Rector\Rector\MethodCall\MethodNameReplacerRector:
+        App\SomeModule\Presenter\SomeController:
+            run: '__invoke'
+        App\SomeModule\Presenter\HomepageController:
+            run: '__invoke'
+        App\AnotherModule\Presenter\HomepageController:
+            run: '__invoke'
+
+        # ...
+        # 50+ more cases</code></pre>
+<p>Well, <strong>isn't that silly</strong>? It is.</p>
+<h2 id="can-asterisk-save-us"><a href="#can-asterisk-save-us" class="heading-anchor">Can Asterisk Save Us?</a></h2>
+<p>What if you could use <a href="http://php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a> pattern?</p>
+<pre><code class="language-yaml"># rector.yaml
+services:
+    Rector\Rector\MethodCall\MethodNameReplacerRector:
+        App\*Module\Presenter\*Controller:
+            run: '__invoke'</code></pre>
+<p>Kittens will love you now!</p>
+<p><em>This <a href="https://github.com/rectorphp/rector/pull/1004">feature</a> was added to Rector v0.3.40.</em></p>
+<p><br></p>
+<p>One more thing! You can use it on any type check:</p>
+<pre><code class="language-diff"> services:
+     Rector\Rector\Constant\ClassConstantReplacerRector:
+-        Framework\Request:
++        Framework\Request*:
+             200: CODE_200
+             300: CODE_300
+             400: CODE_400
+             404: CODE_404
+             500: CODE_500
+-        Framework\RequestInterface:
+-            200: CODE_200
+-            300: CODE_300
+-            400: CODE_400
+-            404: CODE_404
+-            500: CODE_500</code></pre>
+<p><br></p>
+<p>Happy instant refactorings!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2019/2019-02-04-new-in-rector-asterisk-type-match.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2019/01/31/monorepo-composer-magic/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        Monorepo Composer Magic
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=1986958618"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=262890417"></script>
+<script src="/assets/js/cluster-checklist.js?=1949303990"></script>
+<script src="/assets/js/cluster-expanable.js?=1720563166"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="New in Rector: Asterisk Type Match" />
+    <meta property="og:description" content="Rector had started just recently helping instantly refactor private commercial projects. Not just from legacy to modern PHP, but also from one PHP framework to another. I won&#039;t tell you which ones as the work is in progress, but when it&#039;s finished, you&#039;ll be the first to hear.
+
+
+The positive side effect of Rector helping to migrate real commercial project are new features in its core that is free and open-source Today with little, yet powerful asterisk type match." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2019/02/04/new-in-rector-asterisk-type-match" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="New in Rector: Asterisk Type Match" />
+    <meta name="twitter:description" content="Rector had started just recently helping instantly refactor private commercial projects. Not just from legacy to modern PHP, but also from one PHP framework to another. I won&#039;t tell you which ones as the work is in progress, but when it&#039;s finished, you&#039;ll be the first to hear.
+
+
+The positive side effect of Rector helping to migrate real commercial project are new features in its core that is free and open-source Today with little, yet powerful asterisk type match." />

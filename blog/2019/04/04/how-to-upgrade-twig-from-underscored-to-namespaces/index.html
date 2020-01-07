@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>How to Upgrade Twig from Underscored to Namespaces | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=534879589" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=9498321" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=1981796311" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=892364137" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 200 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>How to Upgrade Twig from Underscored to Namespaces</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>2 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2019-04-Thu">
+            
+                            Thu, Apr 4, 2019
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2019/04/04/how-to-upgrade-twig-from-underscored-to-namespaces/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        Symfony <a href="https://symfony.com/blog/new-in-twig-namespaced-classes">recently announced a new version of Twig</a> with namespaces as we know it. Before PHP 5.2 there was <code>Underscored_Namespace</code> - I remember because that was the first version I used.
+<br><br>
+Today I'll show you how to upgrade from <code>_</code> to <code>\\</code> in few <del>minutes</del> seconds.
+                    </div>
+                </div>
+
+                
+                <div class="text-center">
+    <img src="/assets/images/posts/2019/twig-under/twig-image.png" style="max-width: 28em"></div>
+<div class="alert alert-sm alert-success mt-3">
+    <p>This set would not be possible and as good as it is without you, open-source PHP community.
+    I'd like to thank 👏:</p>
+
+    <ul><li><strong><a href="https://github.com/greg0ire">greg0ire</a></strong> <a href="https://github.com/rectorphp/rector/commit/493e418f4691f3a4beadf901bd54ea7406380891">for contributing</a> to this set</li>
+        <li>and <strong><a href="https://github.com/enumag">enumag</a></strong> for <a href="https://github.com/rectorphp/rector/search?q=twig+is%3Aissue+author%3Aenumag&amp;unscoped_q=twig+is%3Aissue+author%3Aenumag&amp;type=Issues">battle testing and reported issues</a></li>
+    </ul></div>
+<h2 id="find-and-replace"><a href="#find-and-replace" class="heading-anchor">Find and Replace?</a></h2>
+<p>So all we need to do is replace <code>Twig_</code> with <code>Twig\</code>?</p>
+<pre><code class="language-diff">-Twig_Function
++Twig\Function</code></pre>
+<p>This would fail since <code>Twig\Function</code> class doesn't exist. <code>Twig\TwigFunction</code> does. There <a href="https://github.com/rectorphp/rector/blob/a1bd751f14c35e1e22c21ebcc3c26c922b4796a1/config/level/twig/underscore-to-namespace.yaml#L3-L154">150 more cases</a> where <strong>find and replace fails</strong>.</p>
+<h2 id="2-places"><a href="#2-places" class="heading-anchor">2 Places</a></h2>
+<p>We need to replace both docblocks:</p>
+<pre><code class="language-diff"> /**
+- * @throws \Twig_Error_Loader
++ * @throws \Twig\Error\LoaderError
+  */
+ public function render(): void
+ {
+-    /** @var \Twig_Environment $env */
++    /** @var \Twig\Environment $env */
+     $env = $this-&gt;getTwigEnv();
+
+     // ...
+ }</code></pre>
+<p>And the code:</p>
+<pre><code class="language-diff">-$safeTwigEnvironment = new \Twig_Environment(
++$safeTwigEnvironment = new \Twig\Environment(
+-   new \Twig_Loader_Array([])
++   new \Twig\Loader\ArrayLoader([])
+);</code></pre>
+<p>In a reaction to the Symfony blog post, I see many developers <a href="https://github.com/sculpin/sculpin/pull/423/files">do upgrades manually</a>. In case of 50 changes, it's ok, but private code bases will go 1000+ use cases.</p>
+<h2 id="code-pattern-refactoring"><a href="#code-pattern-refactoring" class="heading-anchor"><del>Code</del> Pattern Refactoring</a></h2>
+<p>For <a href="https://github.com/rectorphp/rector">Rector</a> it just 1 pattern to refactor. Just tell him to process your files <code>src</code>:</p>
+<pre><code class="language-bash">composer require rector/rector --dev # make sure you have version 0.4.10+ at least
+vendor/bin/rector process src --set twig-underscore-to-namespace</code></pre>
+<p>Happy coding!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2019/2019-04-04-how-to-upgrade-twig-from-underscored-to-namespaces.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2019/04/01/removing-static-there-and-back-again/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        Removing Static - There and Back Again
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=1381256739"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=213511537"></script>
+<script src="/assets/js/cluster-checklist.js?=1624355662"></script>
+<script src="/assets/js/cluster-expanable.js?=902776051"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="How to Upgrade Twig from Underscored to Namespaces" />
+    <meta property="og:description" content="Symfony recently announced a new version of Twig with namespaces as we know it. Before PHP 5.2 there was Underscored_Namespace - I remember because that was the first version I used.
+
+Today I&#039;ll show you how to upgrade from _ to \\ in few minutes seconds." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2019/04/04/how-to-upgrade-twig-from-underscored-to-namespaces" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="How to Upgrade Twig from Underscored to Namespaces" />
+    <meta name="twitter:description" content="Symfony recently announced a new version of Twig with namespaces as we know it. Before PHP 5.2 there was Underscored_Namespace - I remember because that was the first version I used.
+
+Today I&#039;ll show you how to upgrade from _ to \\ in few minutes seconds." />

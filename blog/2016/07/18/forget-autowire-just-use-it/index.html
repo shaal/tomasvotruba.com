@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Forget &quot;autowire&quot; and just use it | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=2018954151" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=1912875503" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=1137898342" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=175768933" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 10 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>Forget "autowire" and just use it</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>2 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2016-07-Mon">
+            
+                            Mon, Jul 18, 2016
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2016/07/18/forget-autowire-just-use-it/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                                    <div class="card border-danger card-bigger">
+                        <div class="card-header text-white bg-danger">
+                            <strong>This post is deprecated since May 2017</strong>
+                        </div>
+                        <div class="card-body">
+                            You can set autowiring via <a href="https://symfony.com/blog/new-in-symfony-3-3-simpler-service-configuration#default-service-configuration">new <code>_defaults</code> per config file feature</a> since <strong>Symfony 3.3</strong>.
+                        </div>
+                    </div>
+
+                    <br>
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        Autowiring is a great feature that was added in Symfony 2.8. It moves Dependency Injection pattern to the next level.
+If you want to use it to its full potential, you still have to add 1 extra line to every service configuration.
+Today I will show you, how to get rid of that line.
+                    </div>
+                </div>
+
+                
+                <h2 id="when-to-autowire"><a href="#when-to-autowire" class="heading-anchor">When to autowire?</a></h2>
+<p>If you use autowiring daily, you might came across this thinking process before you place <code>autowired: true</code> to your config:</p>
+<p><em>1) Has this service constructor dependency?</em></p>
+<ul>
+<li>No =&gt; skip</li>
+<li>Yes =&gt; go on</li>
+</ul>
+<p><em>2) Is it object?</em></p>
+<ul>
+<li>No =&gt; skip</li>
+<li>Yes =&gt; go on</li>
+</ul>
+<p><em>3) Is it unique service type?</em></p>
+<ul>
+<li>No =&gt; add <a href="https://github.com/symfony/symfony/pull/21494"><code>alias</code> for specific name to required service</a></li>
+<li>Yes =&gt; autowire</li>
+</ul>
+<p><em>4) Has the constructor changed during development?</em></p>
+<ul>
+<li>Start from point 1.</li>
+</ul>
+<p>Plus some more logic for edge cases like parameters and factories.</p>
+<h2 id="seems-like-function-could-this-be-automated"><a href="#seems-like-function-could-this-be-automated" class="heading-anchor">Seems like function... Could this be automated?</a></h2>
+<p>You are right! <strong>It can be automated.</strong></p>
+<p>This is exactly what <a href="https://github.com/Symplify/DefaultAutowire">Symplify/DefaultAutowire</a> bundle does.</p>
+<p>Apart handling feature above for you, it will turn this...</p>
+<pre><code class="language-yaml"># app/config/config.yml
+services:
+    PriceCalculator:
+        autowire: true
+
+    ProductRepository:
+        autowire: true
+
+    UserFactory:
+        autowire: true</code></pre>
+<p>...into this:</p>
+<pre><code class="language-yaml"># app/config/config.yml
+services:
+    PriceCalculator: ~
+
+    ProductRepository: ~
+
+    UserFactory: ~</code></pre>
+<h2 id="get-it-done-in-2-steps"><a href="#get-it-done-in-2-steps" class="heading-anchor">Get It Done in 2 steps</a></h2>
+<h3 id="1-install-package"><a href="#1-install-package" class="heading-anchor">1. Install package</a></h3>
+<pre><code class="language-yaml">composer require symplify/default-autowire</code></pre>
+<h3 id="2-register-bundle"><a href="#2-register-bundle" class="heading-anchor">2. Register bundle</a></h3>
+<pre><code class="language-php">// app/AppKernel.php
+
+final class AppKernel extends Kernel
+{
+    public function registerBundles(): array
+    {
+        $bundles = [
+            new Symplify\DefaultAutowire\SymplifyDefaultAutowireBundle(),
+            // ...
+        ];
+    }
+}</code></pre>
+<p>And that's it!</p>
+<p>For further use, <strong>just check Readme for <a href="https://github.com/Symplify/DefaultAutowire">Symplify/DefaultAutowire</a>.</strong></p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2016/2016-07-18-forget-autowire-just-use-it.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2016/06/17/filters-pattern-in-nette-database/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        Filters Pattern in Nette Database
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=1725505494"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=91265352"></script>
+<script src="/assets/js/cluster-checklist.js?=1325218412"></script>
+<script src="/assets/js/cluster-expanable.js?=1326825245"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="Forget &quot;autowire&quot; and just use it" />
+    <meta property="og:description" content="Autowiring is a great feature that was added in Symfony 2.8. It moves Dependency Injection pattern to the next level.
+If you want to use it to its full potential, you still have to add 1 extra line to every service configuration.
+Today I will show you, how to get rid of that line." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2016/07/18/forget-autowire-just-use-it" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="Forget &quot;autowire&quot; and just use it" />
+    <meta name="twitter:description" content="Autowiring is a great feature that was added in Symfony 2.8. It moves Dependency Injection pattern to the next level.
+If you want to use it to its full potential, you still have to add 1 extra line to every service configuration.
+Today I will show you, how to get rid of that line." />

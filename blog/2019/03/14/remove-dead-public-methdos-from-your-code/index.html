@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Remove Dead Public Methods from Your Code | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=1154466022" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=898603582" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=857523845" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=1504435252" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 194 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>Remove Dead Public Methods from Your Code</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>2 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2019-03-Thu">
+            
+                            Thu, Mar 14, 2019
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2019/03/14/remove-dead-public-methdos-from-your-code/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        We already have sniffs and rectors to remove unused private methods. But what about public methods? If you're creating open-source packages, public methods might be used by anyone.
+<br><br>
+But what if you're creating an application - you can remove unused with peace in mind.
+There is only one problem to resolve - <strong>find public unused methods</strong>.
+                    </div>
+                </div>
+
+                
+                <p><em>Too long to read? Look at <a href="https://www.youtube.com/watch?v=sKFB6XVmO_Q">3:45 min practical video</a> by a friend of mine <a href="https://jankuchar.cz/">Jan Kuchař</a>.</em></p>
+<p><br></p>
+<p>As we code on an application for many years, some methods may be replaced by a few new-ones:</p>
+<pre><code class="language-diff"> $person = new Person('Tomas');
+-$person-&gt;getFullName();
++$person-&gt;getName();</code></pre>
+<p>If the application is complex, we may not know if the old method is still in use anywhere:</p>
+<pre><code class="language-php">&lt;?php
+
+class Person
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+    public function __construct(string $name)
+    {
+        $this-&gt;name = $name;
+    }
+
+    public function getName()
+    {
+        // ...
+    }
+
+    public function getFullName()
+    {
+        // ...
+    }
+}</code></pre>
+<p>We don't have to manually read the codebase file by file. PHPStorm can help us examine each public method and where they are being used.</p>
+<p><strong>Just right-click the method call</strong> (&quot;provide&quot; in the picture) <strong>and select &quot;Find Usages&quot;</strong>.</p>
+<img src="/assets/images/posts/2019/dead-public/usages.png" class="img-thumbnail">
+<p>It took us 5-10 seconds to <strong>find out that <code>getFullName()</code> is a dead method</strong>. Great job!</p>
+<h2 id="can-we-find-them-faster"><a href="#can-we-find-them-faster" class="heading-anchor">Can we Find Them Faster?</a></h2>
+<p>Now <strong>do the same for all the other public methods</strong>.</p>
+<p>I consider Symplify project quite small, at least compared to private web applications. Yet, there <a href="https://github.com/Symplify/Symplify/search?q=%22public+function%22&amp;unscoped_q=%22public+function%22">is over 684 public methods</a>. Even if we remove public methods from test fixtures, there will remain ~ 500 public methods:</p>
+<div class="blockquote text-center">
+    500 * 5 secs = 2500 secs ~= 41 mins
+</div>
+<p>...and we don't talk about brain wasted on linear operations. This is not the way.</p>
+<h2 id="how-to-find-them-in-20-seconds"><a href="#how-to-find-them-in-20-seconds" class="heading-anchor">How to find them in 20 Seconds?</a></h2>
+<p>There is one little sniff in <code>symplify/coding-standard</code> only few people know about. Set it up:</p>
+<pre><code class="language-yaml"># ecs.yaml
+services:
+    Symplify\CodingStandard\Sniffs\DeadCode\UnusedPublicMethodSniff: ~</code></pre>
+<p>And use it:</p>
+<pre><code class="language-bash">vendor/bin/ecs check src</code></pre>
+<h2 id="magic"><a href="#magic" class="heading-anchor">Magic?</a></h2>
+<p>Not really. The sniff goes through your code and:</p>
+<ul>
+<li>finds all methods: <code>public function someMethod()</code></li>
+<li>then find all method calls: <code>$this-&gt;someMethod()</code></li>
+<li>and simply <strong>reports those public functions that were never called</strong></li>
+</ul>
+<p>Then just skip false positives, that are <a href="https://github.com/rectorphp/rector/blob/a8db80baff48eb02319963b3380f185461678815/packages/NodeTypeResolver/config/config.yaml#L15">called in yaml configs</a> or in strings - and that is it!</p>
+<p><strong>You'll be surprised, how many methods are dead in your code :)</strong></p>
+<p><br></p>
+<p>Happy coding!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2019/2019-03-14-remove-dead-public-methdos-from-your-code.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2019/03/11/why-we-migrated-from-nette-to-symfony-in-3-weeks-part-3/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        Why we Migrated from Nette to Symfony in 3 Weeks - Part 3 - Brain Drain Dead Packages-Lock
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=738313927"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=353356992"></script>
+<script src="/assets/js/cluster-checklist.js?=1374675672"></script>
+<script src="/assets/js/cluster-expanable.js?=1295706771"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="Remove Dead Public Methods from Your Code" />
+    <meta property="og:description" content="We already have sniffs and rectors to remove unused private methods. But what about public methods? If you&#039;re creating open-source packages, public methods might be used by anyone.
+
+But what if you&#039;re creating an application - you can remove unused with peace in mind.
+There is only one problem to resolve - find public unused methods." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2019/03/14/remove-dead-public-methdos-from-your-code" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="Remove Dead Public Methods from Your Code" />
+    <meta name="twitter:description" content="We already have sniffs and rectors to remove unused private methods. But what about public methods? If you&#039;re creating open-source packages, public methods might be used by anyone.
+
+But what if you&#039;re creating an application - you can remove unused with peace in mind.
+There is only one problem to resolve - find public unused methods." />

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>How to Instantly Migrate PhpSpec to PHPUnit | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=1218714030" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=1547608252" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=320596929" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=84710082" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 196 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.cz" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>How to Instantly&nbsp;Migrate PhpSpec&nbsp;to&nbsp;PHPUnit</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>4 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2019-03-Thu">
+            
+                            Thu, Mar 21, 2019
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.cz/blog/2019/03/21/how-to-instantly-migrate-phpspec-to-phpunit/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        I'm happy that more and more people try to use Rector upgrade and migrate their code-bases to the ones they really want for a long time.
+<br>
+<br>
+Last week I was approached by 2 different people with single need - <strong>migrate their tests to PHPUnit</strong>.
+                    </div>
+                </div>
+
+                
+                <blockquote class="blockquote text-center">
+    "Nobody believes in anything without an inner feeling that it can be realized.
+    <br>
+    This is the only source of dreamlike powers."
+    <footer class="blockquote-footer">Peter Altenberg
+</footer></blockquote>
+<p><em>Disclaimer: I never used nor saw PhpSpec in code before this mentoring session. All I learned was from my client and his needs (and bit of reading the documentation)</em>.</p>
+<h2 id="quot-why-do-you-have-2-unit-testing-frameworks-quot"><a href="#quot-why-do-you-have-2-unit-testing-frameworks-quot" class="heading-anchor">&quot;Why do you Have 2 Unit-Testing Frameworks?&quot;</a></h2>
+<p>That was my question to one of my clients when I saw both PhpSpec and PHPUnit tests in its code base.</p>
+<ul>
+<li>&quot;So what is added value of PhpSpec over PHPUnit?&quot;</li>
+<li>&quot;Well, I use it for unit testing.&quot;</li>
+<li>&quot;How is that different to PHPUnit?&quot;</li>
+<li>&quot;It tests the behavior.&quot;</li>
+<li>&quot;Well, what is the difference between <code>assertSame()</code> and <code>shouldBeEqualTo()</code>&quot;?</li>
+<li>&quot;None really.&quot;</li>
+</ul>
+<p>But before I noticed PhpSpec and asked about it, we had another chat:</p>
+<ul>
+<li>&quot;Why there is this static class when the rest of your code uses Symfony Dependency Injection?&quot;</li>
+<li>&quot;It's needed for my test.&quot;</li>
+<li>&quot;Why don't you use <code>KernelTestCase</code>&quot;?</li>
+<li>&quot;I can't.&quot;</li>
+<li>&quot;Well, you have Symfony and you run your whole application on it, you have PHPUnit, so you can. Why not?&quot;</li>
+<li>&quot;It's not PHPUnit, it's PhpSpec.&quot;</li>
+<li>&quot;So?&quot;</li>
+<li>&quot;It doesn't use any container, there must be static in my code.&quot;</li>
+<li>&quot;So what is added value of PhpSpec over PHPUnit?&quot;</li>
+<li>&quot;...&quot;</li>
+</ul>
+<p>Then I explored PhpSpec and found out, it's <strong>basically PHPUnit with different naming</strong>.</p>
+<blockquote class="blockquote text-center">
+    "It looks like Y, a variant of X, could be done in
+    <br>
+    about half the time, and you lose only one feature."
+    <footer class="blockquote-footer">The Pragmatic Programmer book
+</footer></blockquote>
+<h2 id="trends-over-long-tail-effect"><a href="#trends-over-long-tail-effect" class="heading-anchor">Trends over Long-Tail Effect</a></h2>
+<p>Why did we choose to migrate PhpSpec tests to PHPUnit? Well, it's better obviously... Do you agree with me just because I wrote that? <strong>Don't do that, it's my personal opinionated opinion (= feeling, emotion). Ask me for some data instead</strong>.</p>
+<p>Let's look at downloads:</p>
+<ul>
+<li>1 mil. downloads</li>
+<li><a href="https://packagist.org/packages/phpspec/phpspec/stats">14 mils. downloads</a></li>
+<li><a href="https://packagist.org/packages/phpunit/phpunit/stats">117 mils. downloads</a></li>
+</ul>
+<p>But 117 mil. downloads can be like &quot;You should use Windows XP because it's the most used Windows version ever!&quot; That's classic manipulation of dying dinosaur.</p>
+<p><strong>Let's see the trends!</strong> In the same order:</p>
+<div class="row">
+    <div class="col-md-4 col-sm-4">
+        <img src="/assets/images/posts/2019/unit-mig/tester.png"></div>
+    <div class="col-md-4 col-sm-4">
+        <a href="https://packagist.org/packages/phpspec/phpspec/stats">
+            <img src="/assets/images/posts/2019/unit-mig/spec.png"></a>
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <a href="https://packagist.org/packages/phpunit/phpunit/stats">
+            <img src="/assets/images/posts/2019/unit-mig/phpunit.png"></a>
+    </div>
+</div>
+<p>Which one would you pick from this 2 information? I'd go for the last one, so did my client. <strong>So that's why we agreed to migrate PhpSpec</strong> (the middle one) <strong>to PHPUnit</strong>.</p>
+<p><br></p>
+<p>This is how 1 spec migration might look like:</p>
+<pre><code class="language-diff"> &lt;?php
+
+-namespace spec\App\Product;
++namespace Tests\App\Product;
+
+-use PhpSpec\ObjectBehavior;
+
+-final class CategorySpec extends ObjectBehavior
++final class CategoryTest extends \PHPUnit\Framework\TestCase
+ {
++    /**
++     * @var \App\Product\Category
++     */
++    private $createMe;
+
+-    public function let()
++    protected function setUp()
+     {
+-        $this-&gt;beConstructedWith(5);
++        $this-&gt;createMe = new \App\Product\Category(5);
+     }
+
+-    public function it_returns_id()
++    public function testReturnsId()
+     {
+-        $this-&gt;id()-&gt;shouldReturn(5);
++        $this-&gt;assertSame(5, $this-&gt;createMe-&gt;id());
+     }
+
+-    public function it_blows()
++    public function testBlows()
+     {
+-        $this-&gt;shouldThrow('SomeException')-&gt;during('item', [5]);
++        $this-&gt;expectException('SomeException');
++        $this-&gt;createMe-&gt;item(5);
+     }
+
+-    public function it_should_be_called(Cart $cart)
++    public function testCalled()
+     {
++        /** @var Cart|\PHPUnit\Framework\MockObject\MockObject $cart */
++        $cart = $this-&gt;createMock(Cart::class);
+-        $cart-&gt;price()-&gt;shouldBeCalled()-&gt;willReturn(5);
++        $cart-&gt;expects($this-&gt;atLeastOnce())-&gt;method('price')-&gt;willReturn(5);
+-        $cart-&gt;shippingAddress(Argument::type(Address::class))-&gt;shouldBeCalled();
++        $cart-&gt;expects($this-&gt;atLeastOnce())-&gt;method('shippingAddress')-&gt;with($this-&gt;isType(Address::class));
+     }
+
+-     public function is_bool_check()
++     public function testBoolCheck()
+      {
+-         $this-&gt;hasFailed()-&gt;shouldBe(false);
++         $this-&gt;assertFalse($this-&gt;createMe-&gt;hasFailed());
+-         $this-&gt;hasFailed()-&gt;shouldNotBe(false);
++         $this-&gt;assertNotFalse($this-&gt;createMe-&gt;hasFailed());
+      }
+
+-     public function is_array_type()
++     public function testArrayType()
+      {
+-         $this-&gt;shippingAddresses()-&gt;shouldBeArray();
++         $this-&gt;assertIsIterable($this-&gt;createMe-&gt;shippingAddresses());
+      }
+ }</code></pre>
+<p>Pretty clear, right?</p>
+<h2 id="how-to-instantly-migrate-from-phpspec-to-phpunit"><a href="#how-to-instantly-migrate-from-phpspec-to-phpunit" class="heading-anchor">How to Instantly Migrate from PhpSpec to PHPUnit?</a></h2>
+<p>First, take a 2-week paid vacation... Just kidding. Start with Rector which migrates ~95 % of code cases. It also renames <code>*Spec.php</code> to <code>*Test.php</code> and moves them from <code>/spec</code> to <code>/tests</code> directory:</p>
+<pre><code class="language-bash">composer require rector/rector --dev
+vendor/bin/rector process spec --set phpspec-to-phpunit</code></pre>
+<p>Rector is getting smarter every set, but I bet there are still some missed cases. <strong>When the code doesn't work, just go and <a href="https://github.com/rectorphp/rector/issues">report the issue</a></strong> with expected vs. current output.</p>
+<p>Take 10 more minutes to polish the rest of code and send PR to your project <em class="fas fa-fw fa-check text-success fa-lg"></em></p>
+<p><br></p>
+<p>And what was the other unit testing framework that Rector migrated? You'll see in the next post.</p>
+<p><br></p>
+<p>Happy coding!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2019/2019-03-21-how-to-instantly-migrate-phpspec-to-phpunit.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2019/03/18/how-to-detect-dead-php-code-in-code-review-in-7-snippets/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        How to Detect Dead PHP Code in Code Review in 7 Snippets
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=566123073"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=1535267810"></script>
+<script src="/assets/js/cluster-checklist.js?=1870610379"></script>
+<script src="/assets/js/cluster-expanable.js?=1462681347"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.cz">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="How to Instantly Migrate PhpSpec to PHPUnit" />
+    <meta property="og:description" content="I&#039;m happy that more and more people try to use Rector upgrade and migrate their code-bases to the ones they really want for a long time.
+
+
+Last week I was approached by 2 different people with single need - migrate their tests to PHPUnit." />
+    <meta property="og:url" content="https://www.tomasvotruba.cz/blog/2019/03/21/how-to-instantly-migrate-phpspec-to-phpunit" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="How to Instantly Migrate PhpSpec to PHPUnit" />
+    <meta name="twitter:description" content="I&#039;m happy that more and more people try to use Rector upgrade and migrate their code-bases to the ones they really want for a long time.
+
+
+Last week I was approached by 2 different people with single need - migrate their tests to PHPUnit." />
