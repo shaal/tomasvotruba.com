@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Introducing PHAR for Easy Coding Standard | Tomas Votruba</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Tomas Votruba Blog RSS" href="/rss.xml">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css" integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+
+        <link href="/assets/bootstrap/bootstrap.min.css?v=933240026" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/prism/prism.css?v=660885969" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/style.css?v=216171344" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/gifplayer/gifplayer.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/checklist.css?v=57122871" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <!-- post_id: 235 -->
+
+        <div class="hidden-sm-down">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <ul>
+                <li id="logo">
+                    <img src="https://avatars1.githubusercontent.com/u/924196?s=60&v=4" class="avatar">
+                    Tomas Votruba
+                </li>
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li class="">
+                    <a href="/php-framework-trends/">Trends</a>
+                </li>
+                <li class="">
+                    <a href="/clusters/">Clusters</a>
+                </li>
+                <li class="">
+                    <a href="/mission/">Mission</a>
+                </li>
+                <li class="">
+                    <a href="/talks/">Talks</a>
+                </li>
+                <li class="">
+                    <a href="/contact/">Contact</a>
+                </li>
+                <li id="top-menu-search">
+                    <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.com" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="hidden-md-up">
+    <nav class="navbar" id="mobile-menu">
+        <div class="container">
+            <a href="/" class="col-3 col-sm-3 active">
+                <em class="fas fa-book"></em>
+                <br>
+                Blog
+            </a>
+            <a href="/clusters/" class="col-3 col-sm-3 ">
+                <em class="fas fa-share-alt"></em>
+                <br>
+                Clusters
+            </a>
+            <a href="/php-framework-trends/" class="col-3 col-sm-3 ">
+                <em class="fas fa-chart-bar"></em>
+                <br>
+                Trends
+            </a>
+            <a href="/contact/" class="col-3 col-sm-3 ">
+                <em class="fas fa-phone"></em>
+                <br>
+                Contact
+            </a>
+        </div>
+    </nav>
+
+    <div class="hidden-md-up text-center" id="top-menu-search-mobile">
+        <form method="get" action="https://www.google.com/search" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction">
+    <meta itemprop="target" content="https://www.google.com/search?q={q}"/>
+    <input name="sitesearch" value="tomasvotruba.com" type="hidden"/>
+    <input itemprop="query-input" type="text" id="search-query" class="form-control" required="required" name="q" placeholder="Search..." autocomplete="off"/>
+</form>
+    </div>
+</div>
+
+        <div class="mainContent">
+            <div class="container-fluid" id="post">
+                <div class="text-center">
+    <a href="https://patreon.com/rectorphp" class="btn btn-outline-light d-block mt-3 btn-outline-dark" id="support-me-button">
+        Do you find <strong>my posts helpful</strong>?
+        <br>
+        ❤️ &nbsp;Support me on Patreon&nbsp; <em class="fab fa-patreon fa-fw text-danger"></em>
+    </a>
+</div>
+
+                <h1>Introducing PHAR for Easy&nbsp;Coding&nbsp;Standard</h1>
+
+                <ul class="list-inline post-metadata">
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-clock fa-fw"></em>
+        <strong>2 min</strong>
+    </li>
+
+    <li class="list-inline-item mr-3">
+        <em class="fas fa-calendar fa-fw"></em>
+        <time datetime="2020-01-Mon">
+            
+                            Mon, Jan 20
+            
+                    </time>
+    </li>
+
+    
+            <li class="list-inline-item mr-3">
+            <em class="fas fa-fw fa-comments"></em>
+            <a href="https://www.tomasvotruba.com/blog/2020/01/20/introducing-phar-for-easy-coding-standard/#disqus_thread">X</a> comments
+        </li>
+    
+    </ul>
+
+                
+                
+                <div class="card card-bigger">
+                    <div class="card-body">
+                        Recently months there was huge jump in using ECS, <a href="https://packagist.org/packages/symplify/easy-coding-standard/stats">almost 4 000 downloads daily now</a>!
+<br>
+<br>
+With this downloads growth, there is also growing demand for using it on older and older PHP projects. <strong>ECS brings huge value there, as it helps with migration of code and cleaning it up</strong>.
+<br>
+<br>
+The problem is that ECS uses modern packages and it <strong>makes installation on old projects impossible</strong>.
+<br>
+<br>
+Does it though in 2020?   
+                    </div>
+                </div>
+
+                
+                <p><br></p>
+<p>This is how installation on old project makes us angry:</p>
+<img src="/assets/images/posts/ecs_prefixed.gif" class="img-thumbnail">
+<p><strong>I don't like it when developers are frustrated by the limits of the system they use</strong>. My mission is quite the opposite - make a complex system simple and easy to use by anyone.</p>
+<p>So I took a few-days effort and made a prefixed PHAR Easy Coding Standard version for legacy projects. You can see <a href="https://github.com/Symplify/Symplify/pull/1734">Pull Request on Github</a>.</p>
+<p>The first release of the prefixed version is v7.2.2, so you can enjoy all the cool features like <a href="https://github.com/Symplify/Symplify/pull/1537"><code>only</code></a> and <a href="https://github.com/Symplify/Symplify/pull/1735"><code>paths</code> parameters</a>.</p>
+<h3 id="add-prefixed-and-it-works"><a href="#add-prefixed-and-it-works" class="heading-anchor">Add <code>-prefixed</code> and It Works</a></h3>
+<p>Really. S instead of normal package installation:</p>
+<pre><code class="language-bash">composer require symplify/easy-coding-standard --dev</code></pre>
+<p>Use the <code>-prefixed</code> version:</p>
+<pre><code class="language-bash">composer require symplify/easy-coding-standard-prefixed --dev</code></pre>
+<p><strong>And you're ready to go!</strong></p>
+<pre><code class="language-bash">vendor/bin/ecs</code></pre>
+<h2 id=""><a href="#" class="heading-anchor"><em class="fas fa-fw fa-lg fa-check text-success"></em></a></h2>
+<p><br></p>
+<h2 id="what-are-prefixed-phars-and-how-they-work"><a href="#what-are-prefixed-phars-and-how-they-work" class="heading-anchor">What are Prefixed PHARs and How They Work?</a></h2>
+<p>I will not bother you with technical details, but if you're working on PHP CLI app and you want to <strong>make it accessible to the majority of PHP developers</strong>, you can learn more here:</p>
+<ul>
+<li><a href="/blog/2019/12/02/how-to-box-symfony-app-to-phar-without-killing-yourself/">How to Box Symfony App to PHAR without Killing Yourself</a></li>
+<li><a href="https://getrector.org/blog/2020/01/20/how-to-install-rector-despite-composer-conflicts">How to install Rector despite Composer Conflicts</a></li>
+</ul>
+<p><br></p>
+<p>Happy coding!</p>
+
+                <br>
+
+                
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center p-0">
+                                <a href="https://github.com/TomasVotruba/tomasvotruba.com/edit/master/source/_posts/2020/2020-01-20-introducing-phar-for-easy-coding-standard.md" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                    <em class="fab fa-fw fa-github"></em>
+                                    <strong>Found a typo?</strong>
+                                    <br>
+                                    Fix it to join team of 79&nbsp;people that improve content here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                                                                                                                                
+                                                    <div class="card mb-4">
+                                <div class="card-body bg-success text-white text-center p-0">
+                                    <a href="/blog/2020/01/13/why-is-first-instant-feedback-crucial-to-developers/" class="d-block pt-4 pb-4 pl-4 pr-4">
+                                        <em class="fas fa-fw fa-forward"></em>
+                                        <strong>Next</strong>
+                                        <br>
+                                        Why is First Instant Feedback Crucial to Developers?
+                                    </a>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <a name="comments"></a>
+
+                <div id="disqus_thread"></div>
+
+<script type="text/javascript">
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//' + 'itsworthsharing' + '.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+            </div>
+
+            <script id="dsq-count-scr" src="https://itsworthsharing.disqus.com/count.js" async defer></script>
+        </div>
+
+        <script src="/assets/js/jquery-3.3.1.slim.min.js?=1143767024"></script>
+<script src="/assets/gifplayer/jquery.gifplayer.js?=1826082292"></script>
+<script src="/assets/js/cluster-checklist.js?=1191342546"></script>
+<script src="/assets/js/cluster-expanable.js?=368852629"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    ga=function(){ ga.q.push(arguments) };
+    ga.q=[];
+    ga.l=+new Date;
+    ga('create', 'UA-46082345-1', 'auto');
+    ga('send','pageview');
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="/assets/prism/prism.js"></script>
+
+<script>
+    $('.gifplayer').gifplayer();
+
+    // sortable table
+    $('.sortable_table').DataTable({
+        // see https://datatables.net/examples/basic_init/filter_only.html
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "order": [[1, "desc"]],
+        // see https://datatables.net/examples/advanced_init/sort_direction_control.html
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] },
+            { "orderSequence": [ "desc", "asc" ] }
+        ]
+    });
+</script>
+
+<div class="text-center mt-5" id="footer">
+    <div class="row">
+        <div class="col-12">
+            Join 17 579 PHP developers every month: <a href="/rss.xml">RSS</a>&nbsp;or&nbsp;<a href="https://twitter.com/votrubaT">@votrubaT</a>
+        </div>
+    </div>
+
+    <p>
+        Build by <a href="/thank-you/">80 people</a>
+
+        <span class="pl-2 pr-2">•</span>
+
+        <a href="https://patreon.com/rectorphp">Support me</a>
+
+        <span class="hidden-sm-down">
+            <span class="pl-2 pr-2">•</span>
+            Hosted with <a href="https://www.statie.org/">Statie</a> on <a href="https://github.com/tomasvotruba/tomasvotruba.com">GitHub</a>
+        </span>
+    </p>
+</div>
+    </body>
+</html>
+
+        <meta property="og:type" content="article" />
+    <meta property="og:title" content="Introducing PHAR for Easy Coding Standard" />
+    <meta property="og:description" content="Recently months there was huge jump in using ECS, almost 4 000 downloads daily now!
+
+
+With this downloads growth, there is also growing demand for using it on older and older PHP projects. ECS brings huge value there, as it helps with migration of code and cleaning it up.
+
+
+The problem is that ECS uses modern packages and it makes installation on old projects impossible.
+
+
+Does it though in 2020?   " />
+    <meta property="og:url" content="https://www.tomasvotruba.com/blog/2020/01/20/introducing-phar-for-easy-coding-standard" />
+
+        <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@votrubaT">
+    <meta name="twitter:title" content="Introducing PHAR for Easy Coding Standard" />
+    <meta name="twitter:description" content="Recently months there was huge jump in using ECS, almost 4 000 downloads daily now!
+
+
+With this downloads growth, there is also growing demand for using it on older and older PHP projects. ECS brings huge value there, as it helps with migration of code and cleaning it up.
+
+
+The problem is that ECS uses modern packages and it makes installation on old projects impossible.
+
+
+Does it though in 2020?   " />
